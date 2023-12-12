@@ -30,7 +30,7 @@ syntax: pipenv install
 
 ___Happy contributing!!!😊😊😊___
 
-___AUTHORS___\n
-NAME: Bartholomew Bassey\n
-EMAIL: basseybartholomew237@gmail.com
+# AUTHORS
+# NAME                #EMAIL
+__Bartholomew Bassey__  | __basseybartholomew237@gmail.com__
 
