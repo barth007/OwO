@@ -31,6 +31,6 @@ syntax: pipenv install
 ___Happy contributing!!!😊😊😊___
 
 # AUTHORS
-# NAME                #EMAIL
+
 __Bartholomew Bassey__  | __basseybartholomew237@gmail.com__
 
