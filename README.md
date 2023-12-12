@@ -7,23 +7,23 @@
 # step 1 :
 
 clone project repo
-syntax: git clone <repo_url>
+: git clone <repo_url>
 
 # step 2:
 change into project directory
-syntax: cd <project_dir>
+: cd <project_dir>
 
 # step 3:
 create a branch
-syntax: git checkout -b <branch_name>
+: git checkout -b <branch_name>
 
 # step 4:
 create virtual environment
-syntax: pipenv shell
+: pipenv shell
 
 # step 5:
 install dependencies
-syntax: pipenv install
+: pipenv install
 
 **Warning**: Please all modules created should pass the pycodestyle 
 
