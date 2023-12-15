@@ -2,28 +2,28 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from user_auth.form import UserCreationForm
 from django.contrib import messages
+from user_auth.form import UserRegisterForm
 
 def register_view (request):
     """
     registration of a new user
     """
 
-    form = UserCreationForm()
+    form = UserRegisterForm()
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            username = new_user.cleaned_data.get('username')
+            username = form.cleaned_data.get('username')
             messages.success(
                 request,
                 f"Hi {username} your account has been created successfully"
             )
             # users should login after registration
-            authenticate(
-                username=new_user.cleaned_data['email'],
-                password=new_user.cleaned_data['password1']
+            new_user = authenticate(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1']
             )
             login(
                 request,

@@ -21,7 +21,7 @@ class User (AbstractUser):
         email_,
         phone_number_,
         is_staff_,
-    )= HELP_TEXT_AND_VERBOSE_NAME["user"].values()
+    ) = HELP_TEXT_AND_VERBOSE_NAME["user"].values()
     username = models.CharField(
         max_length=50,
         help_text=username_[0],
@@ -35,10 +35,12 @@ class User (AbstractUser):
     )
     phone_number = PhoneNumberField(
         unique=True,
+        blank=False, 
         help_text=phone_number_[0],
         verbose_name=phone_number_[1],
     )
     is_staff = models.BooleanField(
+        default=False,
         help_text=is_staff_[0],
         verbose_name=is_staff_[1],
     )

@@ -26,7 +26,25 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="single-input">
-                                    {{ form }}
+                                    <label for="logpassword"> <small>User Name</small></label>
+                                    {{ form.username}}
+                                </div>
+                                <div class="single-input">
+                                    <label for="logpassword">Email address</label>
+                                    {{ form.email}}
+                                </div>
+                                <div class="single-input">
+                                    <label for="logpassword">Phone Number</label>
+                                    {{ form.phone_number}}
+                                </div>
+                                <div class="single-input">
+                                    <label for="logpassword">Password</label>
+                                    {{ form.password1}}
+
+                                </div>
+                                <div class="single-input">
+                                    <label for="logpassword">Confirm password</label>
+                                    {{ form.password2}}
                                 </div>
 
                                 <button class="cmn-btn w-100">Submit</button>
