@@ -128,7 +128,8 @@ AUTH_USER_MODEL = "user_auth.User"
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILE_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
 
 # for custom image upload
 MEDIA_URL = 'media/'
@@ -146,7 +147,7 @@ JAZZMIN_SETTINGS = {
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": "Library",
     # Copyright on the footer
-    "copyright": "Paylio- @copyright 2023",
+    "copyright": "OwO- @copyright 2023",
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     # "order_with_respect_to": ["userauth", "core", "transaction", "addon", "blog"],
 }
