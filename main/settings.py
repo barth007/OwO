@@ -32,12 +32,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # installed apps
+    "phonenumber_field",
+    "jazzmin",
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # start apps
+    'core',
+    'user_auth',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +62,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(Base_Dir,'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,17 +120,34 @@ USE_I18N = True
 USE_TZ = True
 
 
+# custom user model
+AUTH_USER_MODEL = "user_auth.User"
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILE_DIRS = [os.path.join(Base_Dir, 'static')]
+STATICFILE_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # for custom image upload
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(Base_Dir, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# jazzmin settings
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Admin Dashboard",
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Library",
+    # Copyright on the footer
+    "copyright": "Paylio- @copyright 2023",
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    # "order_with_respect_to": ["userauth", "core", "transaction", "addon", "blog"],
+}
+
