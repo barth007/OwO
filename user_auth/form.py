@@ -1,7 +1,7 @@
 # USER AUTH FORM MODULE
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 from user_auth.models import User
 
@@ -21,3 +21,13 @@ class UserRegisterForm(UserCreationForm):
         self.fields['phone_number'].widget.attrs['placeholder'] = self.fields['phone_number'].help_text
         self.fields['password1'].widget.attrs['placeholder'] = 'Enter Password'
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
+
+
+class UserLoginForm(AuthenticationForm):
+    """This form will create fields to login users"""
+
+    def __init__(self, *args, **kwargs):
+        email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter email'}))
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+        self.fields['password'].widget.attrs['placeholder'] = 'Enter password'
+    
