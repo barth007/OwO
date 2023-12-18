@@ -1,8 +1,8 @@
 {% extends 'partials/base.html' %}
 {% block content %}
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-8">
+    <div class="row mt-5">
+        <div class="col-lg-8 mt-5">
             <!-- Post content-->
             <article>
                 <!-- Post header-->
@@ -20,7 +20,7 @@
                 <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
                 <!-- Post content-->
                 <section class="mb-5">
-                    <p class="fs-5 mb-4"> {{ object.content|safe }} </p>
+                    <p class="fs-5 mb-4"> {{ object.content | safe }} </p>
                     {% if object.likes.count == 1 %}
                         <p>{{ object.likes.count }} persons likes this post</p>
                     {% else %}
@@ -31,12 +31,16 @@
                         {% if liked_by_user %}
                             <form method='POST' action="{% url 'blog_likes' object.id %}">
                                 {% csrf_token %}
-                                <button class="btn btn-outline-primary"> Unlike this post</button>
+                                <button class="btn btn-outline-primary" id='unlike'>
+					                <i class="fa-duotone fa-heart" style="--fa-primary-color: #5e4776; --fa-secondary-color: #fc0303;"></i> Unlike Post
+                                </button>
                             </form>
                         {% else %}
                             <form method='POST' action="{% url 'blog_likes' object.id %}">
                                 {% csrf_token %}
-                                <button class="btn btn-outline-primary"> Like this post</button>
+                                <button class="btn btn-outline-primary" id='like'>
+                                    <i class="fa-solid fa-heart" style="color: #e90101;"></i> Like Post
+                                </button>
                             </form>
                         {% endif %}
                     {% else %}
@@ -65,8 +69,9 @@
                                 <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
                             </div>
                             <div class="ms-3">
-                                <div class="fw-bold"></div>
-                                {{ comment.content|safe }}
+                                <div class="fw-bold">
+                                    {{ comment.content | safe }}
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
@@ -81,13 +86,15 @@
         <!-- Side widgets-->
         <div class="col-lg-4 mt-5">
             <!-- Search widget-->
-            <div class="card mb-4">
-                <div class="card-header">Search</div>
+            <div class="card mb-4 mt-5">
+                <div class="card-header">Find a Post</div>
                 <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                    </div>
+                    <form method="GET" action="{% url 'search_blogs' %}">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="q" value="{{ query }}" />
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- Categories widget-->

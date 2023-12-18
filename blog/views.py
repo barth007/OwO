@@ -1,6 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import BlogForm, NewCommentForm
 from .models import Blog, Blog_Comment
@@ -8,22 +8,28 @@ from django.views.generic import ListView, DetailView, View
 
 # Create your views here.
 class Blogs_views(ListView):
-    model = Blog
     ''' Displays the blogs
-        The ListView itself will take care of fetching the objects and passing them to the
-        template, so you don't need to manually fetch and pass the blogs as you did with 
+        The ListView itself will take care of fetching
+            the objects and passing them to the
+        template, so you don't need to manually fetch
+            and pass the blogs as you did with 
     '''
+    model = Blog
+
     contest_object_name = 'blogs'
     template_name = 'blog/blogs.html'
     paginate_by = 4
 
 # @login_required(login_url='/login')
-
 class Blog_details(DetailView):
+    '''Handles the blog detail page'''
     model = Blog
     template_name = 'blog/blog_details.html'
 
     def get_context_data(self, **kwargs):
+        ''' Simply a method that can be used to pass additional
+                information to the template.
+        '''
         data = super().get_context_data(**kwargs)
 
         # Check if the user has liked the blog post
@@ -56,24 +62,44 @@ class Blog_details(DetailView):
 
         return redirect(url)
 
+@login_required(login_url='/login')
 class Like_Blog(View):
-    """ Like counts
+    """ Handles Likes
     """
     model = Blog
 
     def post(self, request, pk):
+
         blog = get_object_or_404(Blog, pk=pk)
 
         if blog.likes.filter(pk=request.user.id).exists():
+            '''checks if the current user already liked the blog'''
             blog.likes.remove(request.user.id)
         else:
             blog.likes.add(request.user.id)
             # we have access to the remove and add method because we are using manytomanyfields for like
             blog.save()
-            # return HttpResponseRedirect(reverse('blog_details', args=[str(pk)]))
-            return redirect('blog_details', pk=pk)
 
-        # Default return statement if the if-else condition is not met
-        # return HttpResponseRedirect(reverse('blog_details', args=[str(pk)]))
+            # return redirect('blog_details', pk=pk)
+
         return redirect('blog_details', pk=pk)
 
+@login_required(login_url='/login')
+def search_blogs(request):
+    ''' Search for a blog in the database
+        query parameters: title and content
+    '''
+    query = request.GET.get('q')
+
+    if query:
+        results = Blog.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        ).distinct()
+    else:
+        results = Blog.objects.all()
+
+    context = {
+        'results': results,
+        'query': query
+    }
+    return render(request, 'blog/search_results.html', context)

@@ -16,7 +16,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <!-- Post preview-->
                 <div class="post-preview">
-                    {% for blog in object_list %}
+                    {% for blog in results %}
                     <section class="mb-5">
                         <div style="width: 100%;">
                             <div class="card mb-4 ">
@@ -31,7 +31,7 @@
                                     {% else %}
                                         <p class="text-muted">{{ blog.likes.count }} people likes this post</p>
                                     {% endif %}
-                                    <a class="btn btn-primary" href="{% url 'blog_details' blog.id %}">Read more →</a>
+                                    <a href="{% url 'blog_details' pk=blog.pk %}"> Read more → </a>
                                 </div>
                             </div>
                         </div>

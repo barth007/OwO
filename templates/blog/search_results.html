@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+{% block content %}
+    <header class="py-5 bg-light border-bottom mb-5">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder mt-5">Search Results</h1>
+            </div>
+        </div>
+    </header>
+    <div class="container px-4 px-lg-5">
+        {% if results %}
+            <ul>
+                {% for blog in results %}
+                <div class="card-body">
+                    <h2 class="card-title">{{ blog.title }}</h2>
+                    <div class="small text-muted">Published on: {{ blog.published_at|date:"F j, Y" }}</div>
+                    <div class="small text-muted">Published by: {{ blog.author.username }}</div>
+                    <p class="card-text">{{ blog.content|truncatewords:30 | safe }}</p>
+                    {% if blog.likes.count == 1 %}
+                        <p class="text-muted">{{ blog.likes.count }} persons likes this post</p>
+                    {% else %}
+                        <p class="text-muted">{{ blog.likes.count }} people likes this post</p>
+                    {% endif %}
+                    <li>
+                        <ul>
+                            <a href="{% url 'blog_details' pk=blog.pk %}"> Learn More -></a>
+                        </ul>
+                    </li>
+                </div>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+{% endblock content %}

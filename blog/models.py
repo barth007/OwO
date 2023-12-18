@@ -7,6 +7,12 @@ BLOG_CATEGORY = [
     ('technology', 'Technology'),
     ('finance', 'Finance'),
     ('health', 'Health'),
+    ('web Design', 'Web Design'),
+    ('html', 'HTML'),
+    ('freebies', 'Freebies'),
+    ('javaScript', 'JavaScript'),
+    ('css', 'CSS'),
+    ('tutorials', 'Tutorials'),
 ]
 
 class Blog(models.Model):
@@ -20,7 +26,7 @@ class Blog(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='blog_posts')
     title = models.CharField(max_length=255, help_text="Enter the title of your blog", verbose_name="Blog Title")
     content = HTMLField(help_text="Write the content of your blog here")
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes', blank=True)
     image = models.ImageField(upload_to='blog_img', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,16 +34,8 @@ class Blog(models.Model):
     blog_category = models.CharField(max_length=20, choices=BLOG_CATEGORY, default='draft', help_text="Select the category of your blog")
     slug = models.SlugField(max_length=255, unique=True, help_text="Enter a URL-friendly title for your blog")
     published_at = models.DateTimeField(null=True, blank=True)
-
-    '''It also helps with Search Engine Optimization (SEO), which means it makes it easier for search engines
-    like Bing to find your blog post when people search for topics related to your post.
-    '''
-    # can be omitted
-    title_suggestion = models.TextField(null=True, blank=True, help_text="Suggestions for improving the title")
-    content_suggestion = models.TextField(null=True, blank=True, help_text="Suggestions for improving the content")
-    comments_suggestion = models.TextField(null=True, blank=True, help_text="Suggestions for managing comments")
-
     # displayed in the Django admin site
+    
     class Meta:
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'
@@ -54,6 +52,8 @@ class Blog(models.Model):
         return BlogComment.objects.filter(blogpost_connected=self).count()
 
     def is_published(self, *args, **kwargs):
+        ''' Checks that a blog is published
+        '''
         if self.status == 'published' and not self.published_at:
             self.published_at = timezone.now()
         supper.save(*args, *kwargs)
