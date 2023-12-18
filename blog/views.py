@@ -14,7 +14,7 @@ class Blogs_views(ListView):
         template, so you don't need to manually fetch and pass the blogs as you did with 
     '''
     contest_object_name = 'blogs'
-    template_name = 'blog/test.html'
+    template_name = 'blog/blogs.html'
     paginate_by = 4
 
 # @login_required(login_url='/login')
@@ -23,22 +23,25 @@ class Blog_details(DetailView):
     model = Blog
     template_name = 'blog/blog_details.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(Blog_details, self).get_context_data(*args, **kwargs)
-        context['liked_by_user'] = False
-        if self.object.likes.filter(pk=self.request.user.id).exists():
-            context['liked_by_user'] = True
-        return context
-
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+
+        # Check if the user has liked the blog post
+        data['liked_by_user'] = False
+        if self.request.user.is_authenticated:
+            if self.object.likes.filter(pk=self.request.user.id).exists():
+                data['liked_by_user'] = True
+
+        # Retrieve and include comments related to the blog post
         blog_commented = Blog_Comment.objects.filter(
             blog_commented=self.object).order_by('-created_at')
         data['comments'] = blog_commented
+
+        # Include a comment form for authenticated users
         if self.request.user.is_authenticated:
             data['comment_form'] = NewCommentForm()
+
         return data
-        
         
     def post(self, request, *args, **kwargs):
         new_comment = Blog_Comment(
