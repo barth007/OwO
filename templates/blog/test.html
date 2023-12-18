@@ -1,0 +1,73 @@
+{% extends 'partials/base.html' %}
+    {% block content %}
+    <header class="py-5 bg-light border-bottom mb-5">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+                <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+    <img src="..." class="img-fluid" alt="...">
+
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Post preview-->
+                <div class="post-preview">
+                    {% for blog in object_list %}
+                    <section class="mb-5">
+                        <div style="width: 100%;">
+                            <div class="card mb-4 ">
+                                <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/1300x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                                <div class="card-body">
+                                    <h2 class="card-title">{{ blog.title }}</h2>
+                                    <div class="small text-muted">Published on: {{ blog.published_at|date:"F j, Y" }}</div>
+                                    <div class="small text-muted">Published by: {{ blog.author.username }}</div>
+                                    <p class="card-text">{{ blog.content|truncatewords:30 | safe }}</p>
+                                    {% if blog.likes.count == 1 %}
+                                        <p class="text-muted">{{ blog.likes.count }} persons likes this post</p>
+                                    {% else %}
+                                        <p class="text-muted">{{ blog.likes.count }} people likes this post</p>
+                                    {% endif %}
+                                    <a class="btn btn-primary" href="{% url 'blog_details' blog.id %}">Read more →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {% endfor %}
+                </div>
+                <!-- Divider-->
+                <hr class="my-4" />
+                <!-- Pager-->
+                {% if page_obj.has_previous %}
+                    <div class="col-lg-6 col-6 mx-0 mb-4">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <a href="?page=1">First Page</a>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <a href="?page={{ page_obj.previous_page_number }}">previous page </a>
+                        </button>
+                        <button type="button" class="btn">
+                            <a href="#!"tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </button>
+                    </div>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <div class="col-lg-6 col-6 mx-0 mb-4">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <a href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">Next Page</a>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <a href="?Page={{ page_obj.paginator.num_pages }}"tabindex="-1" aria-disabled="true">Last Page</a>
+                        </button>
+                        <button type="button" class="btn">
+                            <a href="#!"tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+{% endblock content %}

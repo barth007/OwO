@@ -14,8 +14,8 @@ class Blogs_views(ListView):
         template, so you don't need to manually fetch and pass the blogs as you did with 
     '''
     contest_object_name = 'blogs'
-    template_name = 'blog/blogs.html'
-    paginate_by = 2
+    template_name = 'blog/test.html'
+    paginate_by = 4
 
 # @login_required(login_url='/login')
 
