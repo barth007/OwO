@@ -27,6 +27,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=255, help_text="Enter the title of your blog", verbose_name="Blog Title")
     content = HTMLField(help_text="Write the content of your blog here")
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes', blank=True)
+    like_count = models.BigIntegerField(default='0')
     image = models.ImageField(upload_to='blog_img', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

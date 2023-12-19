@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .forms import BlogForm, NewCommentForm
 from .models import Blog, Blog_Comment
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, RedirectView
+from django.http import JsonResponse
 
 # Create your views here.
 class Blogs_views(ListView):
@@ -18,13 +19,13 @@ class Blogs_views(ListView):
 
     contest_object_name = 'blogs'
     template_name = 'blog/blogs.html'
-    paginate_by = 4
+    paginate_by = 3
 
 # @login_required(login_url='/login')
 class Blog_details(DetailView):
     '''Handles the blog detail page'''
     model = Blog
-    template_name = 'blog/blog_details.html'
+    template_name = 'blog/test.html'
 
     def get_context_data(self, **kwargs):
         ''' Simply a method that can be used to pass additional
@@ -62,29 +63,28 @@ class Blog_details(DetailView):
 
         return redirect(url)
 
-@login_required(login_url='/login')
+# @login_required
 class Like_Blog(View):
-    """ Handles Likes
-    """
     model = Blog
 
     def post(self, request, pk):
-
         blog = get_object_or_404(Blog, pk=pk)
 
         if blog.likes.filter(pk=request.user.id).exists():
-            '''checks if the current user already liked the blog'''
             blog.likes.remove(request.user.id)
         else:
             blog.likes.add(request.user.id)
-            # we have access to the remove and add method because we are using manytomanyfields for like
             blog.save()
 
-            # return redirect('blog_details', pk=pk)
+        # Create a JSON response with the updated like count
+        response_data = {
+            'likes_count': blog.likes.count(),
+        }
 
-        return redirect('blog_details', pk=pk)
+        return JsonResponse(response_data, safe=False)
 
-@login_required(login_url='/login')
+
+# @login_required(login_url='/login')
 def search_blogs(request):
     ''' Search for a blog in the database
         query parameters: title and content
