@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <!-- <textarea class="form-control" name="comment_text" rows="3" placeholder="Join the discussion and leave a comment!"></textarea> -->
                                     {{ comment_form.as_p }}
-                                    <button class="btn btn-info mt-3" type="submit">Add comment <i class="fas fa-comments"></i></button>
+                                    <button class="btn btn-info mt-3" id="comment-btn" name="blog_id" value="{{object.id}}" type="submit">Add comment <i class="fas fa-comments"></i></button>
                                 </div>
                             </form>
                         {% endif %}
