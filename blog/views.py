@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -25,7 +26,7 @@ class Blogs_views(ListView):
 class Blog_details(DetailView):
     '''Handles the blog detail page'''
     model = Blog
-    template_name = 'blog/test.html'
+    template_name = 'blog/blog_details.html'
 
     def get_context_data(self, **kwargs):
         ''' Simply a method that can be used to pass additional
@@ -51,17 +52,24 @@ class Blog_details(DetailView):
         return data
         
     def post(self, request, *args, **kwargs):
+        content = request.POST.get('content')
         new_comment = Blog_Comment(
-            content=request.POST.get('content'),
-            author=self.request.user,
-            blog_commented=self.get_object()
+        content=content,
+        author=self.request.user,
+        blog_commented=self.get_object()
         )
         new_comment.save()
 
-        # Use reverse() to get the URL for the Blog_details view
-        url = reverse('blog_details', kwargs={'pk': self.get_object().pk})
 
-        return redirect(url)
+        # Create a dictionary containing the new comment data
+        new_comment_data = {
+            'content': new_comment.content,
+            'author': new_comment.author.username,
+            'created_at': new_comment.created_at,
+        }
+
+        # Return a JSON response with the new comment data
+        return JsonResponse(new_comment_data)
 
 # @login_required
 class Like_Blog(View):
@@ -103,3 +111,19 @@ def search_blogs(request):
         'query': query
     }
     return render(request, 'blog/search_results.html', context)
+
+
+class Category(View):
+    def get(self, request, val):
+        # Query for blog posts in the specified category
+        blogs = Blog.objects.filter(blog_category=val)
+
+        # Query for titles and count of each title in the specified category
+        blog_titles = Blog.objects.filter(blog_category=val).values('title').annotate(total=Count('title'))
+
+        context = {
+            'blogs': blogs,
+            'blog_titles': blog_titles,
+        }
+
+        return render(request, 'blog/category.html', context)
