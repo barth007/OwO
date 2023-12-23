@@ -7,6 +7,7 @@ from .forms import BlogForm, NewCommentForm
 from .models import Blog, Blog_Comment
 from django.views.generic import ListView, DetailView, View, RedirectView
 from django.http import JsonResponse
+from .utils import check_image_size
 
 # Create your views here.
 class Blogs_views(ListView):
@@ -22,7 +23,19 @@ class Blogs_views(ListView):
     template_name = 'blog/blogs.html'
     paginate_by = 3
 
-# @login_required(login_url='/login')
+    def get_queryset(self):
+        ''' overides the original queryset in the class
+        '''
+        img_width = 1200
+        img_height = 600
+
+        for blog in super().get_queryset():
+            if blog.image:
+                check_image_size(blog.image.path, img_width, img_height)
+        return super().get_queryset()
+
+
+# @login_required()
 class Blog_details(DetailView):
     '''Handles the blog detail page'''
     model = Blog
@@ -44,7 +57,6 @@ class Blog_details(DetailView):
         blog_commented = Blog_Comment.objects.filter(
             blog_commented=self.object).order_by('-created_at')
         data['comments'] = blog_commented
-
         # Include a comment form for authenticated users
         if self.request.user.is_authenticated:
             data['comment_form'] = NewCommentForm()
@@ -59,8 +71,6 @@ class Blog_details(DetailView):
         blog_commented=self.get_object()
         )
         new_comment.save()
-
-
         # Create a dictionary containing the new comment data
         new_comment_data = {
             'content': new_comment.content,
@@ -70,6 +80,18 @@ class Blog_details(DetailView):
 
         # Return a JSON response with the new comment data
         return JsonResponse(new_comment_data)
+
+    def get_queryset(self):
+        ''' overides the original queryset in the class
+        '''
+        img_width = 1200
+        img_height = 600
+
+        for blog in super().get_queryset():
+            if blog.image:
+                check_image_size(blog.image.path, img_width, img_height)
+        return super().get_queryset()
+
 
 # @login_required
 class Like_Blog(View):
@@ -92,7 +114,6 @@ class Like_Blog(View):
         return JsonResponse(response_data, safe=False)
 
 
-# @login_required(login_url='/login')
 def search_blogs(request):
     ''' Search for a blog in the database
         query parameters: title and content
@@ -101,7 +122,7 @@ def search_blogs(request):
 
     if query:
         results = Blog.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
+            Q(slug__icontains=query) | Q(content__icontains=query)
         ).distinct()
     else:
         results = Blog.objects.all()
@@ -113,17 +134,22 @@ def search_blogs(request):
     return render(request, 'blog/search_results.html', context)
 
 
-class Category(View):
-    def get(self, request, val):
-        # Query for blog posts in the specified category
+class Category(ListView):
+    model = Blog
+    template_name = 'blog/category2.html'
+    context_object_name = 'blogs'
+    paginate_by = 3
+
+    def get_queryset(self):
+        """Query for blog posts in the specified category"""
+        val = self.kwargs.get('val')
         blogs = Blog.objects.filter(blog_category=val)
+        
+        img_width = 1200
+        img_height = 600
 
-        # Query for titles and count of each title in the specified category
-        blog_titles = Blog.objects.filter(blog_category=val).values('title').annotate(total=Count('title'))
+        for blog in blogs:
+            if blog.image:
+                check_image_size(blog.image.path, img_width, img_height)
 
-        context = {
-            'blogs': blogs,
-            'blog_titles': blog_titles,
-        }
-
-        return render(request, 'blog/category.html', context)
+        return blogs

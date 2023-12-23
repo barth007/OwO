@@ -26,20 +26,21 @@ $(function($) {
             return false;
         });
 
-        // Navbar Dropdown
-        var dropdown_menu = $(".header-section .dropdown-menu");
-        $(window).resize(function() {
-            if ($(window).width() < 992) {
-                dropdown_menu.removeClass('show');
-            } else {
-                dropdown_menu.addClass('show');
-            }
-        });
-        if ($(window).width() < 992) {
-            dropdown_menu.removeClass('show');
-        } else {
-            dropdown_menu.addClass('show');
-        }
+        // // Navbar Dropdown
+        // var dropdown_menu = $(".header-section .dropdown-menu");
+        // $(window).resize(function() {
+        //     if ($(window).width() < 992) {
+        //         dropdown_menu.removeClass('show');
+        //     } else {
+        //         dropdown_menu.addClass('show');
+        //     }
+        // });
+        // if ($(window).width() < 992) {
+        //     dropdown_menu.removeClass('show');
+        // } else {
+        //     dropdown_menu.addClass('show');
+        // }
+
 
         // Sticky Header
         var fixed_top = $(".header-section");
@@ -50,6 +51,10 @@ $(function($) {
                 fixed_top.removeClass("animated fadeInDown header-fixed");
             }
         });
+
+
+        
+        // ===========
 
         // language active
         var language = $(".language-content li");
@@ -69,6 +74,8 @@ $(function($) {
         $('.card-popup .cancel').click(function() {
             $(".card-popup #limit-tab").click();
         });
+
+        // =======
 
         // Transactions Popup
         $('.transactions .cancel').click(function() {
@@ -101,6 +108,8 @@ $(function($) {
             $(".dashboard-section").toggleClass("body-collapse");
         });
 
+
+//         // ======
         // sidebar body active
         var sidebar_wrapper = $(".sidebar-wrapper");
         var body_collapse = $(".header-section");
@@ -127,6 +136,8 @@ $(function($) {
             $('.notifications-content').removeClass('active');
             $('.language-content').removeClass('active');
         });
+
+        // ===============
         $('.single-item .notifications-btn').on('click', function() {
             $('.notifications-content').toggleClass('active');
             $('.user-content').removeClass('active');

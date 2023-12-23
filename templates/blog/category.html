@@ -2,30 +2,27 @@
 {% load static %}
 <title>Paylio - {% block title %} Blog category {% endblock title %}</title>
     {% block content %}
-    <header class="py-5 bg-light border-bottom mb-5">
-        <div class="container">
-            <div class="text-center my-5">
-                <h1 class="fw-bolder mt-5"></h1>
-                <p class="lead mb-0">Explore our collection of insightful articles on holistic well-being. Your journey to health and happiness begins here.</p>
-            </div>
-        </div>
-    </header>
+    {% include 'blog/blog_header.html' %}
     <!-- Main Content-->
+    {% for val in blogs %}
+    {% if val %}
     <div class="container px-4 px-lg-5">
-        <img src="..." class="img-fluid" alt="...">
-
+        {% if blog.image %}
+            <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog.image.url }}" height='200' /></figure>
+            <!-- The image.url attribute provides the absolute URL for the image based on the configured MEDIA_URL. -->
+        {% else %}
+            <img src="..." class="img-fluid" alt="...">
+        {% endif %}
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <!-- Post preview-->
-                {% for val in blogs %}
-                    {% if val %}
                     <div class="post-preview">
                         <section class="mb-5">
                             <div style="width: 100%;">
                                 <div class="card mb-4 ">
                                     <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/1300x400/ced4da/6c757d.jpg" alt="..." /></figure>
                                     <div class="card-body">
-                                        <h2 class="card-title">{{ val.title }}</h2>
+                                        <h2 class="card-title">{{ val.title | safe }}</h2>
                                         <a href="{% url 'blog_details' pk=val.pk %}"> Read more → </a>
                                     </div>
                                 </div>

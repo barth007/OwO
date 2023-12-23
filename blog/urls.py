@@ -2,6 +2,7 @@ from django.urls import path, include
 from .views import Blogs_views, Blog_details, Like_Blog, search_blogs, Category
 
 
+
 urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('blogs/', Blogs_views.as_view(), name='blogs'),

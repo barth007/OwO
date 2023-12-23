@@ -2,6 +2,7 @@
 {% load static %}
 <title>Paylio - {% block title %} blog_details {% endblock title %}</title>
 {% block content %}
+{% include 'blog/blog_header.html' %}
 <div class="container mt-5">
     <div class="row mt-5">
         <div class="col-lg-8 mt-5">
@@ -10,7 +11,7 @@
                 <!-- Post header-->
                 <header class="mb-4 mt-5">
                     <!-- Post title-->
-                    <h1 class="fw-bolder mb-1">{{ object.title }}</h1>
+                    <h1 class="fw-bolder mb-1">{{ object.title | safe }}</h1>
                     <!-- Post meta content-->
                     <div class="small text-muted">Published on: {{ object.published_at|date:"F j, Y" }}</div>
                     <div class="small text-muted">Author: {{ object.author.username }}</div>
@@ -18,9 +19,11 @@
                     <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category' 'web_Design' %}">Web Design</a>
                     <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category' 'web_Design' %}">Freebies</a>
                 </header>
-                <!-- Preview image figure-->
-                <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
-                <!-- Post content-->
+                {% if object.image %}
+                    <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog.image.url }}"/></figure>
+                {% else %}
+                    <p>No image found </p>
+                {% endif %}
                 <section class="mb-5">
                     <p class="fs-5 mb-4">{{ object.content | safe }}</p>
                     <div class="flex space-x-8 font-medium text-gray-700 text-xl">
@@ -64,6 +67,7 @@
                                 </div>
                             </form>
                         {% endif %}
+                        <hr class="my-4" />
                         {% if comments %}
                         {% for comment in comments %}
                         <div class="d-flex mb-4">
@@ -111,23 +115,30 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="{% url 'category' 'web_Design' %}">Web_Design</a></li>
-                                <li><a href="{% url 'category' 'html' %}">HTML</a></li>
-                                <li><a href="{% url 'category' 'freebies' %}">Freebies</a></li>
+                                <li><a href="{% url 'category' 'finance' %}">Finance</a></li>
+                                <li><a href="{% url 'category' 'health' %}">Health</a></li>
+                                <li><a href="{% url 'category' 'banking_services' %}">Banking services</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="{% url 'category' 'javaScript' %}">JavaScript</a></li>
-                                <li><a href="{% url 'category' 'css' %}">CSS</a></li>
-                                <li><a href="{% url 'category' 'tutorials' %}">Tutorials</a></li>
+                                <li><a href="{% url 'category' 'investment' %}">Investment</a></li>
+                                <li><a href="{% url 'category' 'financial_markets' %}">Financial markets</a></li>
+                                <li><a href="{% url 'category' 'credit_cards' %}">Credit cards</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
                                 <li><a href="{% url 'category' 'technology' %}">Technology</a></li>
-                                <li><a href="{% url 'category' 'health' %}">Health</a></li>
-                                <li><a href="{% url 'category' 'finance' %}">Finance</a></li>
+                                <li><a href="{% url 'category' 'mortgages' %}">Mortgages</a></li>
+                                <li><a href="{% url 'category' 'online_banking' %}">Online banking</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="{% url 'category' 'personal_finance' %}">Personal finance</a></li>
+                                <li><a href="{% url 'category' 'business_finance' %}">Business finance</a></li>
+                                <li><a href="{% url 'category' 'web_Design' %}">Web Design</a></li>
                             </ul>
                         </div>
                     </div>

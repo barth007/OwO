@@ -3,16 +3,20 @@ from django.conf import settings
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
 
+
 BLOG_CATEGORY = [
-    ('technology', 'Technology'),
     ('finance', 'Finance'),
     ('health', 'Health'),
-    ('web Design', 'Web Design'),
-    ('html', 'HTML'),
-    ('freebies', 'Freebies'),
-    ('javaScript', 'JavaScript'),
-    ('css', 'CSS'),
-    ('tutorials', 'Tutorials'),
+    ('web_Design', 'Web Design'),
+    ('technology', 'Technology'),
+    ('banking_services', 'Banking Services'),
+    ('investment', 'Investment'),
+    ('financial_markets', 'Financial Markets'),
+    ('credit_cards', 'Credit Cards'),
+    ('mortgages', 'Mortgages'),
+    ('online_banking', 'Online Banking'),
+    ('personal_finance', 'Personal Finance'),
+    ('business_finance', 'Business Finance'),
 ]
 
 class Blog(models.Model):
@@ -27,13 +31,12 @@ class Blog(models.Model):
     title = models.CharField(max_length=255, help_text="Enter the title of your blog", verbose_name="Blog Title")
     content = HTMLField(help_text="Write the content of your blog here")
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes', blank=True)
-    like_count = models.BigIntegerField(default='0')
     image = models.ImageField(upload_to='blog_img', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=PUBLISH_STATUS, default='draft', help_text="Select the status of your blog")
     blog_category = models.CharField(max_length=20, choices=BLOG_CATEGORY, default='draft', help_text="Select the category of your blog")
-    slug = models.SlugField(max_length=255, unique=True, help_text="Enter a URL-friendly title for your blog")
+    slug = models.SlugField(max_length=255, unique=True, help_text="Enter a URL-friendly title for your blog", null=True, blank=True)
     published_at = models.DateTimeField(null=True, blank=True)
     # displayed in the Django admin site
     
@@ -41,12 +44,6 @@ class Blog(models.Model):
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'
         ordering = ['-created_at']
-        permissions = [
-            ("can_create_post", "Can create a new blog post"),
-            ("can_edit_post", "Can edit a blog post"),
-            ("can_delete_post", "Can delete a blog post"),
-            ("can_view_post", "Can view a blog post"),
-        ]
 
     @property
     def number_of_comments(self):
@@ -55,9 +52,11 @@ class Blog(models.Model):
     def is_published(self, *args, **kwargs):
         ''' Checks that a blog is published
         '''
+        supper().save(*args, *kwargs)
+
         if self.status == 'published' and not self.published_at:
             self.published_at = timezone.now()
-        supper.save(*args, *kwargs)
+
 
     def __str__(self) -> str:
         return f"{self.title} by {self.author.username}"
