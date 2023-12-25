@@ -17,7 +17,7 @@
                     <div class="small text-muted">Author: {{ object.author.username }}</div>
                     <!-- Post categories-->
                     <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category' 'web_Design' %}">Web Design</a>
-                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category' 'web_Design' %}">Freebies</a>
+                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'category' 'finance' %}">Finance</a>
                 </header>
                 {% if object.image %}
                     <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog.image.url }}"/></figure>
@@ -69,23 +69,25 @@
                         {% endif %}
                         <hr class="my-4" />
                         {% if comments %}
-                        {% for comment in comments %}
-                        <div class="d-flex mb-4">
-                            <!-- Parent comment-->
-                            <div class="flex-shrink-0">
-                                <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                            <div id="comments-container">
+                                {% for comment in comments %}
+                                    <div class="d-flex mb-4">
+                                        <!-- Parent comment-->
+                                        <div class="flex-shrink-0">
+                                            <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                                        </div>
+                                        <div class="fs-6">
+                                            <div class="comment">
+                                                <span class="author">{{ comment.author | safe }}:</span>
+                                                <span class="text-muted">{{ comment.content | safe }}</span>
+                                            </div>
+                                            <div class="small fst-italic text-muted created_at">
+                                                {{ comment.created_at|date:"M d, Y, h:i A" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
-                            <div class="fs-6">
-                                <div class="comment">
-                                    <span class="author">{{ comment.author | safe }}:</span>
-                                    {{ comment.content | safe }}
-                                </div>
-                                <div class="small fst-italic text-muted ">
-                                    {{ comment.created_at|date:"h:i A, d M Y" }}
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
                         {% endif %}
                     </div>
                 </div>
@@ -98,7 +100,7 @@
         <div class="col-lg-4 mt-5">
             <!-- Search widget-->
             <div class="card mb-4 mt-5">
-                <div class="card-header">Find a Post</div>
+                <div class="card-header">Find more</div>
                 <div class="card-body">
                     <form method="GET" action="{% url 'search_blogs' %}">
                         <div class="input-group">

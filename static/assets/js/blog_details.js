@@ -20,8 +20,8 @@ $(document).ready(function(){
                 }else{
                     $('.like-icon').removeClass('text-blue-700')
                 }
-                // Fix the typo in accessing the response property
-                like=$('#like-count').text(response.likes_count)
+                
+                const like=$('#like-count').text(response.likes_count)
                 parseInt(like)
             },
             error: function(response) {
@@ -36,7 +36,6 @@ $(document).ready(function(){
         // Serialize the form data
         const formData = $(this).serialize();
     
-        const blog_id = $('#comment-btn').val();
         const token = $('input[name=csrfmiddlewaretoken]').val();
         const url = $(this).attr('action');
     
@@ -48,11 +47,27 @@ $(document).ready(function(){
             success: function (response) {
                 // Handle success, e.g., update UI
                 console.log(response);
-                $('.comment').text(response.content);
-                $('.author').text(response.author);
-                $('.created-at').text(response.created_at);
-                $('.success-message').text('Comment added successfully').show();
     
+                // Create a new comment element
+                const commentDiv = $('<div class="d-flex mb-4 comment">');
+                commentDiv.append('<div class="flex-shrink-0">');
+                commentDiv.find('.flex-shrink-0').append('<img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />');
+                commentDiv.append('<div class="fs-6">');
+                commentDiv.find('.fs-6').append('<div class="comment">');
+                commentDiv.find('.comment').append('<span class="author">' + response.author + ':</span>');
+                commentDiv.find('.comment').append('<span class="text-muted">' + response.content + '</span>');
+
+                // Format the date in the desired format
+                const formattedDate = new Date(response.created_at);
+                const options = { hour: 'numeric', minute: 'numeric', year: 'numeric', month: 'short', day: 'numeric' };
+                const formattedDateString = formattedDate.toLocaleDateString('en-US', options);
+
+                commentDiv.find('.fs-6').append('<div class="small fst-italic text-muted created_at">' + formattedDateString + '</div>');
+
+                // Append the new comment to the comments container
+                $('#comments-container').prepend(commentDiv);
+
+                
                 // Clear form inputs using .find()
                 $('.comment-form').find('input, textarea').val('');
             },
@@ -61,7 +76,5 @@ $(document).ready(function(){
             }
         });
     });
-    
-});
 
-   
+});

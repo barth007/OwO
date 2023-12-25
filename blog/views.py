@@ -19,7 +19,7 @@ class Blogs_views(ListView):
     '''
     model = Blog
 
-    contest_object_name = 'blogs'
+    context_object_name = 'blogs'
     template_name = 'blog/blogs.html'
     paginate_by = 3
 
@@ -32,8 +32,8 @@ class Blogs_views(ListView):
         for blog in super().get_queryset():
             if blog.image:
                 check_image_size(blog.image.path, img_width, img_height)
-        return super().get_queryset()
 
+        return super().get_queryset()
 
 # @login_required()
 class Blog_details(DetailView):
@@ -136,7 +136,7 @@ def search_blogs(request):
 
 class Category(ListView):
     model = Blog
-    template_name = 'blog/category2.html'
+    template_name = 'blog/category.html'
     context_object_name = 'blogs'
     paginate_by = 3
 

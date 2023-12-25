@@ -48,14 +48,12 @@ class Blog(models.Model):
     @property
     def number_of_comments(self):
         return BlogComment.objects.filter(blogpost_connected=self).count()
-
-    def is_published(self, *args, **kwargs):
+    
+    @staticmethod
+    def is_published():
         ''' Checks that a blog is published
         '''
-        supper().save(*args, *kwargs)
-
-        if self.status == 'published' and not self.published_at:
-            self.published_at = timezone.now()
+        return Blog.objects.filter(status='published').exists()
 
 
     def __str__(self) -> str:
