@@ -1,49 +1,39 @@
-from django.db.models import Count
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import BlogForm, NewCommentForm
+from .forms import NewCommentForm
 from .models import Blog, Blog_Comment
-from django.views.generic import ListView, DetailView, View, RedirectView
 from django.http import JsonResponse
-from .utils import check_image_size
+from .utils import ImageSizeValidationMixin
+from django.views.generic import ListView, DetailView, View, RedirectView
+
 
 # Create your views here.
-class Blogs_views(ListView):
+class Blogs_views(ImageSizeValidationMixin, ListView):
     ''' Displays the blogs
-        The ListView itself will take care of fetching
-            the objects and passing them to the
-        template, so you don't need to manually fetch
-            and pass the blogs as you did with 
     '''
     model = Blog
 
     context_object_name = 'blogs'
-    template_name = 'blog/blogs.html'
-    paginate_by = 3
+    template_name = 'blog/blog.html'
+    paginate_by = 4
 
     def get_queryset(self):
-        ''' overides the original queryset in the class
+        ''' Overrides the original queryset
         '''
-        img_width = 1200
-        img_height = 600
+        queryset = super().get_queryset()
+        queryset = queryset.filter(status='published')
+        return queryset
 
-        for blog in super().get_queryset():
-            if blog.image:
-                check_image_size(blog.image.path, img_width, img_height)
 
-        return super().get_queryset()
-
-# @login_required()
 class Blog_details(DetailView):
-    '''Handles the blog detail page'''
+    '''Handles a single blog details'''
     model = Blog
     template_name = 'blog/blog_details.html'
 
     def get_context_data(self, **kwargs):
         ''' Simply a method that can be used to pass additional
-                information to the template.
+            information to the template.
         '''
         data = super().get_context_data(**kwargs)
 
@@ -57,13 +47,17 @@ class Blog_details(DetailView):
         blog_commented = Blog_Comment.objects.filter(
             blog_commented=self.object).order_by('-created_at')
         data['comments'] = blog_commented
-        # Include a comment form for authenticated users
-        if self.request.user.is_authenticated:
-            data['comment_form'] = NewCommentForm()
 
-        return data
+        # Include a comment form for a user
+        data['comment_form'] = NewCommentForm()
         
+        data['related_content'] = Blog.objects.filter(blog_category=self.object.blog_category).order_by('blog_category')
+        return data
+
+
     def post(self, request, *args, **kwargs):
+        ''' create a new comment
+        '''
         content = request.POST.get('content')
         new_comment = Blog_Comment(
         content=content,
@@ -81,19 +75,7 @@ class Blog_details(DetailView):
         # Return a JSON response with the new comment data
         return JsonResponse(new_comment_data)
 
-    def get_queryset(self):
-        ''' overides the original queryset in the class
-        '''
-        img_width = 1200
-        img_height = 600
 
-        for blog in super().get_queryset():
-            if blog.image:
-                check_image_size(blog.image.path, img_width, img_height)
-        return super().get_queryset()
-
-
-# @login_required
 class Like_Blog(View):
     model = Blog
 
@@ -110,8 +92,7 @@ class Like_Blog(View):
         response_data = {
             'likes_count': blog.likes.count(),
         }
-
-        return JsonResponse(response_data, safe=False)
+        return JsonResponse(response_data)
 
 
 def search_blogs(request):
@@ -133,23 +114,14 @@ def search_blogs(request):
     }
     return render(request, 'blog/search_results.html', context)
 
-
 class Category(ListView):
     model = Blog
     template_name = 'blog/category.html'
     context_object_name = 'blogs'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_queryset(self):
         """Query for blog posts in the specified category"""
         val = self.kwargs.get('val')
         blogs = Blog.objects.filter(blog_category=val)
-        
-        img_width = 1200
-        img_height = 600
-
-        for blog in blogs:
-            if blog.image:
-                check_image_size(blog.image.path, img_width, img_height)
-
         return blogs

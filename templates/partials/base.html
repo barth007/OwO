@@ -34,7 +34,7 @@
                 <div class="row d-flex header-area">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <!-- =========== -->
-                        {% include 'blog/carousel.html' %}
+                        {% include 'blog/nav.html' %}
                         <!-- ================ -->
                         <a class="navbar-brand" href="index.html">
                             <img src="{% static 'assets/images/logo.png' %}" class="logo" alt="logo">
@@ -75,7 +75,7 @@
                                     <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                                         data-bs-toggle="dropdown" data-bs-auto-close="outside">Company</a>
                                     <ul class="dropdown-menu main-menu shadow hide">
-                                        <li><a class="nav-link" href="about-us.html">About Us</a></li>
+                                        <li><a class="nav-link" href="{% url 'about-us' %}">About Us</a></li>
                                         <li><a class="nav-link" href="career.html">Career</a></li>
                                         <li><a class="nav-link" href="career-details.html">Career Details</a></li>
                                         <li class="dropend sub-navbar">

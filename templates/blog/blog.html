@@ -1,0 +1,77 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+<title>Paylio - {% block title %} Blogs {% endblock title %}</title>
+
+{% block content %}
+    {% include 'blog/blog_header.html' %}
+
+    <div class="container">
+        <div class="row">
+            {% for blog in blogs %}
+                <div class="col-md-6 mb-4">
+                    <section>
+                        <div class="card">
+                            {% if blog.image %}
+                                <img class="card-img-top" src="{{ blog.image.url }}" alt="Blog Image">
+                            {% else %}
+                                <img class="card-img-top" src="..." alt="Placeholder Image">
+                            {% endif %}
+                            
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ blog.title | safe }}</h5>
+                                <p class="card-text">{{ blog.content|truncatewords:30 | safe }}</p>
+                                <a href="{% url 'blog_details' pk=blog.pk %}" class="btn btn-primary">Read more</a>
+                            </div>
+                        </div>
+                        {% if blog.likes.count == 0 or blog.likes.count == 1 %}
+                            <p class="text-muted like-count mt-1" id="like-count">{{ blog.likes.count }} Like</p>
+                        {% else %}
+                            <p class="text-muted like-count" id="like-count">{{ blog.likes.count }} Likes</p>
+                        {% endif %}
+                    </section>
+                </div>
+            {% endfor %}
+        </div>
+        {% if not page_obj.has_previous %}
+        <div class="col-lg-6 col-6 mx-0 mb-4">
+            <button type="button">
+                <a href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true"> >> </a>
+            </button>
+            <!-- <button type="button" class="btn btn-primary btn-sm">
+                <a href="?Page={{ page_obj.paginator.num_pages }}"tabindex="-1" aria-disabled="true">Last Page</a>
+            </button> -->
+            <button type="button">
+                <a href="#!"tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </button>
+        </div>
+    {% elif not page_obj.has_next  %}
+        <div class="col-lg-6 col-6 mx-0 mb-4">
+            <button type="button">
+                <a href="?page={{ page_obj.previous_page_number }}"> << </a>
+            </button>
+            <button type="button">
+                <a href="?page=1"> <<< </a>
+            </button>
+            <button type="button">
+                <a href="#!"tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </button>
+        </div>
+    {% else %}
+        <div class="col-lg-6 col-6 mx-0 mb-4">
+            <!-- <button type="button" class="btn btn-primary btn-sm">
+                <a href="?page=1">First Page</a>
+            </button> -->
+            <button type="button">
+                <a href="?page={{ page_obj.previous_page_number }}"> << </a>
+            </button>
+            <button type="button">
+                <a href="?page={{ page_obj.next_page_number }}"> >> </a>
+            </button>
+            <button type="button">
+                <a href="#!"tabindex="-1" aria-disabled="true">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </button>
+        </div>
+    {% endif %}
+    </div>
+{% endblock content %}

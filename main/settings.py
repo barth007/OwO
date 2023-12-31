@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'user_auth',
     'blog.apps.BlogConfig',
+    'company.apps.CompanyConfig',
 ]
 
 
