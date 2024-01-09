@@ -6,3 +6,4 @@ services:
       python3 manage.py collectstatic --noinput
       python3 manage.py migrate
     startCommand: gunicorn main.wsgi:application
+    staticDir: staticfiles
