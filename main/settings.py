@@ -47,9 +47,23 @@ INSTALLED_APPS = [
     'user_auth',
 ]
 
+WHITENOISE_IGNORE_MISSING = True
+WHITENOISE_DEBUG = True
+
+from whitenoise.storage import CompressedManifestStaticFilesStorage
+
+class IgnoreMissingFilesStorage(CompressedManifestStaticFilesStorage):
+    def hashed_name(self, name, content=None, filename=None):
+        try:
+            return super().hashed_name(name, content, filename)
+        except ValueError:
+            # Ignore missing files
+            return name
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,7 +141,14 @@ AUTH_USER_MODEL = "user_auth.User"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "main.settings.IgnoreMissingFilesStorage"
+STATICFILES_STORAGE = "main.settings.IgnoreMissingFilesStorage"
+
+
+
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
 
