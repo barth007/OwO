@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from user_auth.form import UserRegisterForm, UserLoginForm
 
+def index(request):
+    
+    return render(request, 'core/home.html')
+
 def register_view (request):
     """
     registration of a new user
