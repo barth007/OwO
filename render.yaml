@@ -3,6 +3,6 @@ services:
     name: main
     buildCommand: |
       pipenv install --deploy --ignore-pipfile
-      python manage.py collectstatic --noinput
-      python manage.py migrate
+      python3 manage.py collectstatic --noinput
+      python3 manage.py migrate
     startCommand: gunicorn main.wsgi:application
