@@ -4,10 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+django = "~=4.0"
 django-jazzmin = "*"
 django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
