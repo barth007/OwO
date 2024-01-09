@@ -7,7 +7,7 @@ from user_auth.form import UserRegisterForm, UserLoginForm
 
 def index(request):
     
-    return render(request, 'core/home.html')
+    return render(request, 'auth/sign-in.html')
 
 def register_view (request):
     """
