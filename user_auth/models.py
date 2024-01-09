@@ -34,7 +34,7 @@ class User (AbstractUser):
         verbose_name=email_[1],
     )
     phone_number = PhoneNumberField(
-        unique=True,
+        unique=False,
         blank=False, 
         help_text=phone_number_[0],
         verbose_name=phone_number_[1],

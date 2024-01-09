@@ -5035,6 +5035,27 @@ label {
     .dashboard-section.pay.step .main-content .choose-recipient .recipient-list {
         margin-bottom: 15px;
     }
+
 }
+
+/* Add this CSS to your stylesheet or in a <style> tag in your HTML file */
+.select {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px; /* Optional: add space between each label-input pair */
+  }
+  
+  .select label {
+    margin-right: 10px; /* Optional: add space between label and input */
+  }
+  
+  .select select,
+  .select input {
+    /* Adjust the width as needed */
+    width: 200px;
+    /* Add any other styling you want for the select or input elements */
+  }
+  
 
 /*# sourceMappingURL=style.css.map */
