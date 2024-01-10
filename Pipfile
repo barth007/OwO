@@ -8,6 +8,9 @@ django = "*"
 django-jazzmin = "*"
 django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 gunicorn = "*"
+django-shortuuidfield = "*"
+django-import-export = "*"
+pillow = "*"
 
 [dev-packages]
 

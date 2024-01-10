@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     # installed apps
     "phonenumber_field",
     "jazzmin",
+    'shortuuid',
+    'import_export',
     # default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     # start apps
     'core',
     'user_auth',
+    'account',
 ]
 
 MIDDLEWARE = [
