@@ -30,7 +30,7 @@ def register_view (request):
                 password=form.cleaned_data['password1']
             )
             login(request, new_user)
-            return redirect('core:index')
+            return redirect('account:account')
     elif request.user.is_authenticated:
         messages.warning(request, f"You're already logged in")
     context = {
@@ -50,12 +50,12 @@ def login_view(request):
             )
             if logged_user is not None:
                 login(request, logged_user)
-                return redirect('core:index')
+                return redirect('account:account')
             else:
                 messages.warning(request, f"Invalid login credentials")
     elif request.user.is_authenticated:
         messages.warning(request, f"You're already logged in")
-        return redirect('core:index')
+        return redirect('account:account')
     
     form = UserLoginForm()    
     context = {
