@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from whitenoise.storage import CompressedManifestStaticFilesStorage
 from pathlib import Path
 import os
 
@@ -53,7 +54,6 @@ INSTALLED_APPS = [
 WHITENOISE_IGNORE_MISSING = True
 WHITENOISE_DEBUG = True
 
-from whitenoise.storage import CompressedManifestStaticFilesStorage
 
 class IgnoreMissingFilesStorage(CompressedManifestStaticFilesStorage):
     def hashed_name(self, name, content=None, filename=None):
@@ -62,6 +62,7 @@ class IgnoreMissingFilesStorage(CompressedManifestStaticFilesStorage):
         except ValueError:
             # Ignore missing files
             return name
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,7 +80,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,10 +151,9 @@ AUTH_USER_MODEL = "user_auth.User"
 STATICFILES_STORAGE = "main.settings.IgnoreMissingFilesStorage"
 
 
-
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # for custom image upload
 MEDIA_URL = 'media/'
