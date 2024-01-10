@@ -6,6 +6,6 @@ services:
       python3 manage.py collectstatic --noinput
       python3 manage.py migrate
     startCommand: gunicorn main.wsgi:application
-    envVars:
-      DJANGO_SETTINGS_MODULE: "main.settings"
-    env: python=3.8
+    # envVars:
+    #   DJANGO_SETTINGS_MODULE: "main.settings"
+    # env: python=3.8
