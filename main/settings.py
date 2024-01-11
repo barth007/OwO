@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['owo-vpvy.onrender.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     # installed apps
+    "tinymce",
     "phonenumber_field",
     "jazzmin",
     'shortuuid',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # start apps
+    'blog.apps.BlogConfig',
+    'company.apps.CompanyConfig',
     'core',
     'user_auth',
     'account',
