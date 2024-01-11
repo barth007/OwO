@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from whitenoise.storage import CompressedManifestStaticFilesStorage
 from pathlib import Path
 import os
 
@@ -26,16 +27,18 @@ SECRET_KEY = 'django-insecure-nhcw61dlo8n*m300=j)$9+h*t22x)eqsm2uv&%p_5p)%+6^!30
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['owo-vpvy.onrender.com', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     # installed apps
+    "tinymce",
     "phonenumber_field",
     "jazzmin",
-    "tinymce",
+    'shortuuid',
+    'import_export',
     # default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,16 +47,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # start apps
-    'core',
-    'user_auth',
     'blog.apps.BlogConfig',
     'company.apps.CompanyConfig',
+    'core',
+    'user_auth',
+    'account',
 ]
+
+WHITENOISE_IGNORE_MISSING = True
+WHITENOISE_DEBUG = True
+
+
+class IgnoreMissingFilesStorage(CompressedManifestStaticFilesStorage):
+    def hashed_name(self, name, content=None, filename=None):
+        try:
+            return super().hashed_name(name, content, filename)
+        except ValueError:
+            # Ignore missing files
+            return name
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -66,7 +83,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Lagos'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -131,18 +148,19 @@ AUTH_USER_MODEL = "user_auth.User"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "main.settings.IgnoreMissingFilesStorage"
+STATICFILES_STORAGE = "main.settings.IgnoreMissingFilesStorage"
+
+
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # for custom image upload
-# =======
-# MEDIA_URL = 'media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# ========
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -160,4 +178,3 @@ JAZZMIN_SETTINGS = {
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     # "order_with_respect_to": ["userauth", "core", "transaction", "addon", "blog"],
 }
-
