@@ -7980,7 +7980,7 @@ fieldset:disabled .btn {
 }
 
 .justify-content-between {
-    justify-content: space-between !important
+    justify-content: right !important
 }
 
 .justify-content-around {
