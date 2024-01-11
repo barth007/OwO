@@ -30,16 +30,15 @@ Sign-In
                         </div>
                         <span class="or">Or Continue With</span>
                     </div>
-                    <form method="post">
+                    <form method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
                                 <div class="single-input">
-                                    <label for="logemail">Your Email</label>
-                                    {{ form}}
+                                    {{form}}
                                 </div>
 
-                                <button class="cmn-btn w-100">Login</button>
+                                <button class="cmn-btn w-100" type="submit">Login</button>
                             </div>
                         </div>
                     </form>

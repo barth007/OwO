@@ -12,7 +12,7 @@
                         <img src="{% static 'assets/images/icon/support-icon.png' %}" alt="icon">
                     </div>
                 </div>
-                <div class="choose-recipient">
+                <!-- <div class="choose-recipient">
                     <div class="step-area">
                         <span class="mdr">Step 1 of 3</span>
                         <h5>Choose Recipient</h5>
@@ -38,7 +38,7 @@
                         </button>
                     </div>
                     <p class="recipients-item">200 Recipients</p>
-                </div>
+                </div> -->
                 <form class="flex-fill" method="POST">
                     {% csrf_token %}
                     <div class="form-group d-flex align-items-center">
@@ -63,8 +63,7 @@
                                 <p>{{ a.user.kyc.full_name|title }}</p>
                                 <p>{{ a.account_number }}</p>
                                 <span class="mdr"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                        data-cfemail="773f12051a1619444237101a161e1b5914181a">{{ a.user.email
-                                        }}</a></span>
+                                        data-cfemail="773f12051a1619444237101a161e1b5914181a">{{ a.user.email }}</a></span>
                             </div>
                         </div>
                         <div class="right">
@@ -83,8 +82,8 @@
 
                 </div>
                 <div class="footer-area mt-40">
-                    <a href="pay.html">Previous Step</a>
-                    <a href="pay-step-2.html" class="active">Next</a>
+                    <!-- <a href="pay.html">Previous Step</a>
+                    <a href="pay-step-2.html" class="active">Next</a> -->
                 </div>
             </div>
         </div>

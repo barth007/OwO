@@ -18,7 +18,6 @@ class KycForm(forms.ModelForm):
             'marital_status',
             'gender',
             'full_name',
-            'user',
             'identity_type',
             'identity_image',
             'date_of_birth',

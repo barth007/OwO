@@ -168,23 +168,23 @@
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                         <div class="sidebar-logo">
-                            <a href="dashboard.html"><img src="{% static 'assets/images/logo.png' %}" alt="logo"></a>
+                            <a href="{% url 'account:dashboard' %}"><img src="{% static 'assets/images/logo.png' %}" alt="logo"></a>
                         </div>
                         <ul>
                             <li>
-                                <a href="dashboard.html">
+                                <a href="{% url 'account:dashboard' %}">
                                     <img src="{% static 'assets/images/icon/dashboard.png' %}" alt="Dashboard">
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="transactions.html">
+                                <a href="{% url 'core:transactions' %}">
                                     <img src="{% static 'assets/images/icon/transactions.png' %}" alt="Transactions">
                                     <span>Transactions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="pay.html">
+                                <a href="{% url 'core:search-account' %}">
                                     <img src="{% static 'assets/images/icon/pay.png' %}" alt="Pay"> <span>Pay</span>
                                 </a>
                             </li>
