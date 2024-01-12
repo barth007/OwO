@@ -4,65 +4,88 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from user_auth.form import UserRegisterForm, UserLoginForm
+from user_auth.models import User
 
-def index(request):
-    
-    return render(request, 'auth/sign-in.html')
 
-def register_view (request):
+def register_view(request):
     """
-    registration of a new user
+    Registration of a new user
     """
-
     form = UserRegisterForm()
+<<<<<<< HEAD
+
+=======
     print(request.method)
+>>>>>>> 8cfbd672a1d7efca26583b3c17cf4b6fd91b67a6
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(
-                request,
-                f"Hi {username} your account has been created successfully"
-            )
-            # users should login after registration
-            new_user = authenticate(
-                email=form.cleaned_data['email'],
-                password=form.cleaned_data['password1']
-            )
-            login(request, new_user)
-            return redirect('account:account')
+            print(form)
+            # Check if email or phone number already exists
+            email_exists = User.objects.filter(
+                email=form.cleaned_data['email']).exists()
+            phone_exists = User.objects.filter(
+                phone_number=form.cleaned_data['phone_number']).exists()
+
+            if email_exists:
+                messages.error(request, 'This email is already registered.')
+            elif phone_exists:
+                messages.error(
+                    request, 'This phone number is already registered.')
+            else:
+                # Neither email nor phone number exists, proceed with registration
+                new_user = form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(
+                    request,
+                    f"Hi {username}, your account has been created successfully."
+                )
+                # Users should login after registration
+                new_user = authenticate(
+                    # Use email as the username for authentication
+                    username=form.cleaned_data['email'],
+                    password=form.cleaned_data['password1']
+                )
+                login(request, new_user)
+                return redirect('account:kyc-form')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
+
     elif request.user.is_authenticated:
-        messages.warning(request, f"You're already logged in")
-    context = {
-        'form': form
-        }
+        messages.warning(request, "You're already logged in.")
+
+    context = {'form': form}
     return render(request, 'auth/sign-up.html', context)
+
 
 def login_view(request):
     """ This will login users"""
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            messages.success(request, f"{logged_user} is logged in")
-            logged_user = authenticate(
-                email=form.cleaned_data['email'],
-                password=form.cleaned_data['password']
-            )
-            if logged_user is not None:
-                login(request, logged_user)
-                return redirect('account:account')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            user = User.objects.get(email=email)
+            user = authenticate(request, email=email, password=password)
+
+            if user is not None:  # if there is a user
+                login(request, user)
+                messages.success(request, "You are logged in.")
+                return redirect("account:dashboard")
             else:
-                messages.warning(request, f"Invalid login credentials")
-    elif request.user.is_authenticated:
-        messages.warning(request, f"You're already logged in")
-        return redirect('account:account')
-    
-    form = UserLoginForm()    
-    context = {
-        'form': form
-        }
-    return render(request, 'auth/sign-in.html', context)
+                messages.warning(
+                    request, "Username or password does not exist")
+                return redirect("userauths:sign-in")
+        except:
+            messages.warning(request, "User does not exist")
+
+    if request.user.is_authenticated:
+        messages.warning(request, "You are already logged In")
+        return redirect("account:account")
+
+    return render(request, "auth/sign-in.html")
 
 
 def logout_view(request):

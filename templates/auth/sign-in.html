@@ -30,16 +30,17 @@ Sign-In
                         </div>
                         <span class="or">Or Continue With</span>
                     </div>
-                    <form method="post">
+                    <form method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
                                 <div class="single-input">
-                                    <label for="logemail">Your Email</label>
-                                    {{ form}}
+                                    <input type="text" required name="email" id="logemail" placeholder="Enter Your Email">
                                 </div>
-
-                                <button class="cmn-btn w-100">Login</button>
+                                <div class="single-input">
+                                    <input type="password" required name="password" id="logemail" placeholder="Enter Your Password">
+                                </div>
+                                <button class="cmn-btn w-100" type="submit">Login</button>
                             </div>
                         </div>
                     </form>

@@ -7,13 +7,15 @@ from user_auth.models import User
 
 User = get_user_model()
 
+
 class UserRegisterForm(UserCreationForm):
     """This form will create fields for new users"""
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone_number', 'password1', 'password2']
-    
+        fields = ['username', 'email',
+                  'phone_number', 'password1', 'password2']
+
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = self.fields['username'].help_text
@@ -27,7 +29,6 @@ class UserLoginForm(AuthenticationForm):
     """This form will create fields to login users"""
 
     def __init__(self, *args, **kwargs):
-        email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter email'}))
         super(UserLoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Enter email'
         self.fields['password'].widget.attrs['placeholder'] = 'Enter password'
-    

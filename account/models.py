@@ -52,7 +52,7 @@ class Account(models.Model):
     account_id = ShortUUIDField(
         unique=True, length=7, max_length=25, prefix="DEX", alphabet="123456789")
     pin_number = ShortUUIDField(
-        unique=True, length=4, max_length=7, prefix="217", alphabet="123456789")
+        unique=True, length=4, max_length=7, alphabet="123456789")
     ref_code = ShortUUIDField(unique=True, length=10,
                               max_length=25, alphabet="abcdefgh123456789")
     account_status = models.CharField(
@@ -123,4 +123,3 @@ def save_account(sender, instance, **kwargs):
 #  sender signals
 post_save.connect(create_account, sender=User)
 post_save.connect(save_account, sender=User)
-
