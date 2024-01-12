@@ -12,6 +12,12 @@ def register_view(request):
     Registration of a new user
     """
     form = UserRegisterForm()
+<<<<<<< HEAD
+=======
+
+    print(request.method)
+
+>>>>>>> transaction
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
