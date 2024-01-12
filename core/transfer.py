@@ -9,7 +9,7 @@ from decimal import Decimal
 
 @login_required
 def search_users_account_number(request):
-    # account = Account.objects.filter(account_status="active")
+    # account = Account.objects.get(user=request.user)
     account = Account.objects.all()
     query = request.POST.get("account_number")
     if query:
@@ -18,8 +18,8 @@ def search_users_account_number(request):
             Q(account_id=query)
         ).distinct
     context = {
-        "account": account,
         "query": query,
+        "account": account,
     }
     return render(request, "transfer/search-account.html", context)
 

@@ -23,5 +23,6 @@ urlpatterns = [
          name="transfer-completed"),
 
     # transaction
-    path("transactions/", transaction.transaction_list, name="transactions"),
+    path("transactions/",
+         transaction.transaction_list, name="transactions"),
 ]

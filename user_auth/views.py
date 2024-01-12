@@ -58,37 +58,30 @@ def register_view(request):
 
 def login_view(request):
     """ This will login users"""
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        print(form.data)
-        if form.is_valid():
-            print("is okay")
-            print(f"Username: {form.cleaned_data['email']}")
-            logged_user = authenticate(
-                username=form.cleaned_data['email'],
-                password=form.cleaned_data['password']
-            )
-            if logged_user is not None:
-                login(request, logged_user)
-                messages.success(request, f"{logged_user} is logged in")
-                return redirect('account:account')
-            else:
-                messages.warning(request, f"Invalid login credentials")
-        else:
-            print(form.errors)
-            print("not okay")
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field.capitalize()}: {error}")
-    elif request.user.is_authenticated:
-        messages.warning(request, f"You're already logged in")
-        return redirect('account:account')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
-    form = UserLoginForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'auth/sign-in.html', context)
+        try:
+            user = User.objects.get(email=email)
+            user = authenticate(request, email=email, password=password)
+
+            if user is not None:  # if there is a user
+                login(request, user)
+                messages.success(request, "You are logged in.")
+                return redirect("account:dashboard")
+            else:
+                messages.warning(
+                    request, "Username or password does not exist")
+                return redirect("userauths:sign-in")
+        except:
+            messages.warning(request, "User does not exist")
+
+    if request.user.is_authenticated:
+        messages.warning(request, "You are already logged In")
+        return redirect("account:account")
+
+    return render(request, "auth/sign-in.html")
 
 
 def logout_view(request):
