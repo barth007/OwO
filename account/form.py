@@ -34,5 +34,6 @@ class KycForm(forms.ModelForm):
             "country": forms.TextInput(attrs={"placeholder": "Country"}),
             "state": forms.TextInput(attrs={"placeholder": "State"}),
             "city": forms.TextInput(attrs={"placeholder": "City"}),
-            "date_of_birth": DateInput()
+            "date_of_birth": forms.DateInput(attrs={'type': 'date', 'placeholder': '01/02/1992'}),
         }
+    # user = forms.HiddenInput()

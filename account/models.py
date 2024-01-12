@@ -44,6 +44,7 @@ class Account(models.Model):
     id = models.UUIDField(primary_key=True, unique=True,
                           default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     account_balance = models.DecimalField(
         max_digits=12, decimal_places=2, default=0.00)
     account_number = ShortUUIDField(
@@ -77,6 +78,8 @@ class Kyc(models.Model):
                           default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     account = models.OneToOneField(Account, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # account = models.ForeignKey(Account, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=1000)
     image = models.ImageField(upload_to="kyc", default="default.jpg")
     marital_status = models.CharField(choices=MARITAL_STATUS, max_length=40)
