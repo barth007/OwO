@@ -8,17 +8,11 @@ django = "~=4.0"
 django-jazzmin = "*"
 django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 gunicorn = "*"
-
 django-shortuuidfield = "*"
 django-import-export = "*"
 pillow = "*"
-
-
 whitenoise = "*"
-
-django-tinymce = "==2.9.0"
-
-
+django-tinymce = "*"
 
 [dev-packages]
 

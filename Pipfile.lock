@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1e68ea38f460ea7633f010a6a887361ef3e436d133698b17185493a374525907"
+            "sha256": "c0571360ac1f4a354588c384e00b08631cf91e7687b087b9230e2ddcc9cfbf8a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -87,11 +87,11 @@
         },
         "django-tinymce": {
             "hashes": [
-                "sha256:8a70e1a3b8ff82a14c12c4da90205cba7bb90cc6c2321b240896e58a2b560400",
-                "sha256:cdce6b66520f6ae468ceb7390ec6cb56720bf543dcf212423290544d20715031"
+                "sha256:6f4f6227c2c608052081a436a1e3054c441caae24c9e0c8c3010536e24749e29",
+                "sha256:da5732413f51cf854352e3148f06f170b59d95a6c6a43fd9f7ccfdd1849f4bf9"
             ],
             "index": "pypi",
-            "version": "==2.9.0"
+            "version": "==3.6.1"
         },
         "et-xmlfile": {
             "hashes": [
