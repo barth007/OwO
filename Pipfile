@@ -16,6 +16,9 @@ pillow = "*"
 
 whitenoise = "*"
 
+django-tinymce = "==2.9.0"
+
+
 
 [dev-packages]
 

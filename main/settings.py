@@ -179,3 +179,31 @@ JAZZMIN_SETTINGS = {
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     # "order_with_respect_to": ["userauth", "core", "transaction", "addon", "blog"],
 }
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 360,
+    'width': 840,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'modern',
+    'plugins': '''
+        textcolor save link image media preview codesample contextmenu
+        table code lists fullscreen  insertdatetime nonbreaking
+        contextmenu directionality searchreplace wordcount visualblocks
+        visualchars code fullscreen autolink lists charmap print hr
+        anchor pagebreak
+    ''',
+    'toolbar1': '''
+        fullscreen preview bold italic underline | fontselect,
+        fontsizeselect  | forecolor backcolor | code
+    ''',
+    'toolbar2': '''
+        media | link image | codesample |
+        table | anchor pagebreak |
+        insertdatetime | charmap |
+    ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+}
