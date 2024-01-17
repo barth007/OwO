@@ -1,19 +1,11 @@
 /*============================================ 
-<<<<<<< HEAD
 # Template Name: Paylio Admin Dashboard
-=======
-# Template Name: OwO Admin Dashboard
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
 # Version: 1.0
 # Date: 26/04/2022
 # Author: pixelaxis
 # Author URI: https://themeforest.net/user/pixelaxis/portfolio
 # Developed By: Pranto
-<<<<<<< HEAD
 # Description: Paylio - Money Transfer and Online Payments Dashboard HTML Template
-=======
-# Description: OwO - Money Transfer and Online Payments Dashboard HTML Template
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
 ============================================*/
 
 /*============================================ 
@@ -113,11 +105,7 @@ a:hover {
 }
 
 img {
-<<<<<<< HEAD
     max-width: 100%;
-=======
-    max-width: 60%;
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     height: auto;
 }
 
@@ -497,7 +485,7 @@ label {
     height: 100vh;
     z-index: 99999999;
     overflow: visible;
-    background: url(../images/preloader.gif) no-repeat center center;
+    background: url("../images/preloader.66cdc14033e6.gif") no-repeat center center;
     background-size: 30%;
     background-color: #F8F8F7;
 }
@@ -672,11 +660,7 @@ label {
 .header-section {
     position: absolute;
     top: 0;
-<<<<<<< HEAD
-    left: 86px;
-=======
     left: 0;
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     width: 100%;
     margin-left: 0px;
     width: calc(100% - 140px);
@@ -1106,7 +1090,7 @@ label {
     width: 30px;
     height: 30px;
     left: -40px;
-    background-image: url(../images/icon/flag-usa.png);
+    background-image: url("../images/icon/flag-usa.740f562dc288.png");
     background-repeat: no-repeat;
 }
 
@@ -1803,7 +1787,7 @@ label {
     width: 30px;
     height: 30px;
     left: -40px;
-    background-image: url(../images/icon/flag-usa.png);
+    background-image: url("../images/icon/flag-usa.740f562dc288.png");
     background-repeat: no-repeat;
 }
 
@@ -1835,7 +1819,7 @@ label {
     height: 26px;
     left: -20px;
     z-index: 1;
-    background-image: url(../images/icon/exchange-icon.png);
+    background-image: url("../images/icon/exchange-icon.png");
     background-repeat: no-repeat;
 }
 
@@ -1851,7 +1835,7 @@ label {
 }
 
 .dashboard-section.pay.step-2 .main-content .exchange-content .recipient .nice-select .current::before {
-    background-image: url(../images/icon/flag-bd.png);
+    background-image: url("../images/icon/flag-bd.png");
 }
 
 .dashboard-section.pay.step-2 .main-content .pay-option {
@@ -2050,7 +2034,7 @@ label {
 .dashboard-section.pay.receive-3 .attach-documents .file-upload .file .file-custom::before {
     position: absolute;
     left: 0;
-    background-image: url(../images/icon/upload-icons.png);
+    background-image: url("../images/icon/upload-icons.png");
     background-repeat: no-repeat;
     content: "";
     width: 70px;
@@ -2489,7 +2473,7 @@ label {
     width: 30px;
     height: 30px;
     left: -40px;
-    background-image: url(../images/icon/flag-usa.png);
+    background-image: url("../images/icon/flag-usa.740f562dc288.png");
     background-repeat: no-repeat;
 }
 
@@ -2512,7 +2496,7 @@ label {
     top: -22px;
     left: calc(50% - -12px);
     z-index: 1;
-    background-image: url(../images/icon/exchange-icon.png);
+    background-image: url("../images/icon/exchange-icon.png");
     background-repeat: no-repeat;
 }
 
@@ -2529,7 +2513,7 @@ label {
 }
 
 .dashboard-section.crypto .exchange-content .recipient .nice-select .current::before {
-    background-image: url(../images/icon/flag-btc.png);
+    background-image: url("../images/icon/flag-btc.png");
 }
 
 .dashboard-section.crypto .exchange-content .pay-details ul {
@@ -2658,7 +2642,7 @@ label {
 .dashboard-section.crypto .checkbox-single .checkmark::after {
     width: 16px;
     height: 16px;
-    background-image: url(../images/icon/check.png);
+    background-image: url("../images/icon/check.756ce4209018.png");
     background-repeat: no-repeat;
 }
 
@@ -2741,7 +2725,7 @@ label {
     content: '';
     width: 16px;
     height: 16px;
-    background-image: url(../images/icon/check-2.png);
+    background-image: url("../images/icon/check-2.png");
     background-repeat: no-repeat;
     z-index: 2;
 }
@@ -2827,7 +2811,7 @@ label {
     width: 30px;
     height: 30px;
     left: -40px;
-    background-image: url(../images/icon/flag-usa.png);
+    background-image: url("../images/icon/flag-usa.740f562dc288.png");
     background-repeat: no-repeat;
 }
 
@@ -3411,7 +3395,7 @@ label {
     width: 30px;
     height: 30px;
     left: -40px;
-    background-image: url(../images/icon/flag-usa.png);
+    background-image: url("../images/icon/flag-usa.740f562dc288.png");
     background-repeat: no-repeat;
 }
 
@@ -4025,13 +4009,8 @@ label {
     }
 
     .dashboard-section {
-<<<<<<< HEAD
-        margin-left: 61px;
-        width: calc(100% - 174px);
-=======
         margin-left: 110px;
         width: calc(100% - 100px);
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     }
 
     .header-section.body-collapse {
@@ -5076,4 +5055,4 @@ label {
     }
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map  */
