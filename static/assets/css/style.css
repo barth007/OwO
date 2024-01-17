@@ -1,11 +1,11 @@
 /*============================================ 
-# Template Name: Paylio Admin Dashboard
+# Template Name: OwO Admin Dashboard
 # Version: 1.0
 # Date: 26/04/2022
 # Author: pixelaxis
 # Author URI: https://themeforest.net/user/pixelaxis/portfolio
 # Developed By: Pranto
-# Description: Paylio - Money Transfer and Online Payments Dashboard HTML Template
+# Description: OwO - Money Transfer and Online Payments Dashboard HTML Template
 ============================================*/
 
 /*============================================ 
@@ -105,7 +105,7 @@ a:hover {
 }
 
 img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
 }
 
@@ -948,7 +948,7 @@ label {
 
 .header-section.body-collapse .sidebar-wrapper {
     width: 270px;
-    left: -420px;
+    left: -296px;
 }
 
 .header-section.body-collapse .sidebar-wrapper ul li span {
