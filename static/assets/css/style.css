@@ -105,7 +105,7 @@ a:hover {
 }
 
 img {
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
 }
 
@@ -659,11 +659,11 @@ label {
 
 .header-section {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -18px;
+    left: 84px;
     width: 100%;
     margin-left: 60px;
-    width: calc(100% - 140px);
+    width: calc(100% - 195px);
     z-index: 999;
     background-color: var(--bs-white);
     border-bottom: 1px solid #6c6ea6;
@@ -672,8 +672,8 @@ label {
 
 .header-section.header-fixed {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: -18px;
+    left: 84px;
     z-index: 999;
     box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
     background-color: var(--bs-white);
@@ -4014,7 +4014,7 @@ label {
     }
 
     .header-section.body-collapse {
-        margin-left: 140px;
+        margin-left: 62px;
         width: calc(100% - 140px);
     }
 
@@ -4024,7 +4024,7 @@ label {
     }
 
     .header-section.body-collapse .sidebar-wrapper {
-        width: 270px;
+        width: 221px;
         left: -290px;
     }
 

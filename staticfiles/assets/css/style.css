@@ -660,7 +660,7 @@ label {
 .header-section {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 86px;
     width: 100%;
     margin-left: 0px;
     width: calc(100% - 140px);
@@ -4009,8 +4009,8 @@ label {
     }
 
     .dashboard-section {
-        margin-left: 110px;
-        width: calc(100% - 100px);
+        margin-left: 61px;
+        width: calc(100% - 174px);
     }
 
     .header-section.body-collapse {

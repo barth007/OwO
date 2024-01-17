@@ -224,7 +224,7 @@
                                                         <p class="mdr">No Fees</p>
                                                     </td>
                                                     <td>
-                                                        <a href=""><i class="fa fa-eye"></i></a>
+                                                        <a href="{% url 'core:transaction_detail' s.transaction_id %}"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
@@ -283,7 +283,7 @@
                                                         <p class="mdr">No fee</p>
                                                     </td>
                                                     <td>
-                                                        <a href=""><i class="fa fa-eye"></i></a>
+                                                        <a href="{% url 'core:transaction_detail' r.transaction_id %}"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
