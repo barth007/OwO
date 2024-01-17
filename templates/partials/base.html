@@ -34,6 +34,14 @@
             <div class="container">
                 <div class="row d-flex header-area">
                     <nav class="navbar navbar-expand-lg navbar-light">
+
+                        <a class="navbar-brand" href="{% url 'core:index' %}">
+
+                        <!-- =========== -->
+                        {% include 'blog/nav.html' %}
+                        <!-- ================ -->
+                        <a class="navbar-brand" href="index.html">
+
                         <a class="navbar-brand" href="{% url 'core:index' %}">
                             <img src="{% static 'assets/images/logo.png' %}" class="logo" alt="logo">
                         </a>

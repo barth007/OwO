@@ -127,7 +127,7 @@ def account(request):
 #         'kyc': kyc,
 #     }
 #     return render(request, 'account/kyc-form.html', context)
-    
+
 @login_required
 def kyc_registration_view(request):
     user = request.user
@@ -139,6 +139,10 @@ def kyc_registration_view(request):
                        request.FILES or None, instance=kyc)
     except Kyc.DoesNotExist:
         kyc = None
+<<<<<<< HEAD
+
+=======
+>>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
         form = KycForm(request.POST or None, request.FILES or None)
 
     if request.method == "POST":
@@ -188,3 +192,27 @@ def dashboard(request):
         "receiver_transaction": receiver_transaction
     }
     return render(request, "account/dashboard.html", context)
+<<<<<<< HEAD
+
+    # Explicitly set the 'user' field when creating a new Kyc instance
+    # form = KycForm(request.POST or None,
+    #                request.FILES or None, initial={'user': user})
+
+    # if request.method == "POST":
+    #     if form.is_valid():
+    #         new_form = form.save(commit=False)
+    #         new_form.user = user
+    #         new_form.account = account
+    #         new_form.save()
+    #         messages.success(
+    #             request, "Kyc successfully submitted, In review now")
+    #         return redirect("account:account")
+    #     else:
+    #         for field, errors in form.errors.items():
+    #             for error in errors:
+    #                 messages.error(request, f"{field.capitalize()}: {error}")
+
+    # context = {'account': account, 'form': form, 'kyc': kyc}
+    # return render(request, 'account/kyc-form.html', context)
+=======
+>>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
