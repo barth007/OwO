@@ -15,6 +15,8 @@ def register_view(request):
 
     print(request.method)
 
+    print(request.method)
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
