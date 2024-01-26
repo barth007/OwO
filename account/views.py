@@ -139,10 +139,7 @@ def kyc_registration_view(request):
                        request.FILES or None, instance=kyc)
     except Kyc.DoesNotExist:
         kyc = None
-<<<<<<< HEAD
 
-=======
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
         form = KycForm(request.POST or None, request.FILES or None)
 
     if request.method == "POST":
@@ -192,7 +189,6 @@ def dashboard(request):
         "receiver_transaction": receiver_transaction
     }
     return render(request, "account/dashboard.html", context)
-<<<<<<< HEAD
 
     # Explicitly set the 'user' field when creating a new Kyc instance
     # form = KycForm(request.POST or None,
@@ -214,5 +210,3 @@ def dashboard(request):
 
     # context = {'account': account, 'form': form, 'kyc': kyc}
     # return render(request, 'account/kyc-form.html', context)
-=======
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
