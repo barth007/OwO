@@ -1,19 +1,15 @@
 /*============================================ 
-<<<<<<< HEAD
 # Template Name: Paylio Admin Dashboard
 =======
 # Template Name: OwO Admin Dashboard
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
 # Version: 1.0
 # Date: 26/04/2022
 # Author: pixelaxis
 # Author URI: https://themeforest.net/user/pixelaxis/portfolio
-# Developed By: Pranto
-<<<<<<< HEAD
+
 # Description: Paylio - Money Transfer and Online Payments Dashboard HTML Template
 =======
 # Description: OwO - Money Transfer and Online Payments Dashboard HTML Template
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
 ============================================*/
 
 /*============================================ 
@@ -113,11 +109,7 @@ a:hover {
 }
 
 img {
-<<<<<<< HEAD
     max-width: 100%;
-=======
-    max-width: 60%;
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     height: auto;
 }
 
@@ -672,11 +664,7 @@ label {
 .header-section {
     position: absolute;
     top: 0;
-<<<<<<< HEAD
-    left: 86px;
-=======
     left: 0;
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     width: 100%;
     margin-left: 0px;
     width: calc(100% - 140px);
@@ -711,7 +699,10 @@ label {
 }
 
 .header-section .navbar-area {
-    padding: 10px 40px;
+    padding-left: 42px;
+    padding-right: 87px;
+    padding-bottom: 24px;
+    padding-top: 14px;
 }
 
 .header-section .navbar-area .sidebar-icon {
@@ -4025,13 +4016,10 @@ label {
     }
 
     .dashboard-section {
-<<<<<<< HEAD
         margin-left: 61px;
         width: calc(100% - 174px);
-=======
         margin-left: 110px;
         width: calc(100% - 100px);
->>>>>>> 174990fbae81e31da1807055262fef4c5720a0e3
     }
 
     .header-section.body-collapse {

@@ -2,9 +2,7 @@
 
 from django.urls import path
 from core import views
-from core import transfer
-from core import transaction
-
+from core import transfer, transaction, payment_request
 app_name = "core"
 
 urlpatterns = [
@@ -27,4 +25,18 @@ urlpatterns = [
          transaction.transaction_list, name="transactions"),
     path("transaction_detail/<transaction_id>/",
          transaction.transaction_Detail, name="transaction_detail"),
+
+    # payment request
+    path("request-search-user/", payment_request.searchUserRequest,
+         name="request-search-user"),
+    path("amount-request/<account_number>/", payment_request.amountRequest,
+         name="amount-request"),
+    path("amount-request-process/<account_number>/", payment_request.amountRequestProcess,
+         name="amount-request-process"),
+    path("amount-request-confirmation/<account_number>/<transaction_id>/", payment_request.amountRequestConfirmation,
+         name="amount-request-confirmation"),
+    path("amount-request-final-process/<account_number>/<transaction_id>/", payment_request.amountRequestFinalprocess,
+         name="amount-request-final-process"),
+    path("request-completed/<account_number>/<transaction_id>/", payment_request.requestCompleted,
+         name="request-completed"),
 ]
