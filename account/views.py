@@ -176,9 +176,9 @@ def dashboard(request):
             messages.warning(request, "you need to submit kyc.")
             return redirect("account:kyc-form")
         sender_transaction = Transaction.objects.filter(
-            sender=request.user).order_by("-id")
+            sender=request.user, transaction_type="transfer").order_by("-id")
         receiver_transaction = Transaction.objects.filter(
-            reciever=request.user).order_by("-id")
+            reciever=request.user, transaction_type="transfer").order_by("-id")
     else:
         messages.warning(request,  "You're not logged in.")
         return redirect("user_auth:sigin-in")

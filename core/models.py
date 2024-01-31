@@ -18,9 +18,10 @@ TRANSACTION_STATUS = (
     ("withdraw", "Withdraw"),
     ("pending", "Pending"),
     ("processing", "Processing"),
-    ("request_sent", "Reques Sent"),
+    ("request_sent", "Request Sent"),
     ("request_processing", "Request Processing"),
     ("request_settled", "Request Settled"),
+    ("request_rejected", "Rejected"),
 )
 
 

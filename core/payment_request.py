@@ -98,3 +98,95 @@ def requestCompleted(request, account_number, transaction_id):
         "transaction": transaction
     }
     return render(request, "payment_request/request-completed.html", context)
+
+
+#################### settlement #######################
+@login_required
+def requestSettlement(request, account_number, transaction_id):
+    account = Account.objects.get(account_number=account_number)
+    transaction = Transaction.objects.get(transaction_id=transaction_id)
+    context = {
+        "account": account,
+        "transaction": transaction
+    }
+    return render(request, "payment_request/settlement-confirmation.html", context)
+
+
+@login_required
+def settlement_processing(request, account_number, transaction_id):
+    try:
+        account = Account.objects.get(account_number=account_number)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+        request_granter = request.user
+        request_granter_account = request_granter.account
+
+        if request.method == "POST":
+            pin = request.POST.get("pin-number")
+            if pin == request_granter_account.pin_number:
+                if request_granter_account.account_balance <= 0 or request_granter_account.account_balance <= transaction.amount:
+                    messages.warning(
+                        request, "Insufficient Funds, Please Fund your account and try again later")
+                else:
+                    request_granter_account.account_balance -= transaction.amount
+                    request_granter_account.save()
+                    account.account_balance += transaction.amount
+                    account.save()
+                    transaction.status = "request_settled"
+                    transaction.save()
+                    messages.success(
+                        request, f"Settlement to {account.user.kyc.full_name} was successfully")
+                    return redirect("core:request-settlement-completed", account.account_number, transaction.transaction_id)
+            else:
+                messages.warning(request, "Incorrect pin")
+                return redirect("core:request-confirmation", account.account_number, transaction.transaction_id)
+    except Transaction.DoesNotExist:
+        messages.warning(request, "Error occurred")
+        return redirect("core:dashboard")
+
+
+@login_required
+def requestSettlementCompleted(request, account_number, transaction_id):
+    try:
+        account = Account.objects.get(account_number=account_number)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+    except Transaction.DoesNotExist:
+        messages.warning(request, "Error Occurred")
+        return redirect("account:dashboard")
+    context = {
+        "account": account,
+        "transaction": transaction
+    }
+    return render(request, "payment_request/request-settlement-granted.html", context)
+
+
+@login_required
+def deletePaymentRequest(request, account_number, transaction_id):
+    try:
+        account = Account.objects.get(account_number=account_number)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+        user = request.user
+        user_account = user.account
+        if user == transaction.sender and user_account.account_number == account_number:
+            transaction.delete()
+            messages.success(request, "Payment Request Deleted successfully")
+            return redirect("core:transactions")
+    except Transaction.DoesNotExist:
+        messages.warning(request, "Error Occurred")
+        return redirect("acccount:dashboard")
+
+
+@login_required
+def cancelRecievedRequest(request, account_number, transaction_id):
+    try:
+        account = Account.objects.get(account_number=account_number)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+        user = request.user
+        user_account = user.account
+        if user == transaction.reciever and user_account.account_number == account_number:
+            transaction.status = "request_rejected"
+            transaction.save()
+            messages.error(request, "Request Rejected")
+            return redirect("core:transactions")
+    except Transaction.DoesNotExist:
+        messages.warning(request, "Error Occurred")
+        return redirect("account:dashboard")
