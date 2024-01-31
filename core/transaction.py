@@ -15,9 +15,15 @@ def transaction_list(request):
             messages.warning(request, "submit your kyc.")
             return redirect("user_auth:sign-in")
         sender_transaction = Transaction.objects.filter(
-            sender=request.user).order_by("-id")
+            sender=request.user, transaction_type="transfer").order_by("-id")
         receiver_transaction = Transaction.objects.filter(
-            reciever=request.user).order_by("-id")
+            reciever=request.user, transaction_type="transfer").order_by("-id")
+        request_sender_tranx = Transaction.objects.filter(
+            sender=request.user, transaction_type="payment_request"
+        ).order_by("-id")
+        request_reciever_tranx = Transaction.objects.filter(
+            reciever=request.user, transaction_type="payment_request"
+        ).order_by("-id")
     else:
         messages.warning(request, "login required.")
         return redirect("user_auth:sign-in")
@@ -25,6 +31,8 @@ def transaction_list(request):
     context = {
         "sender_transaction": sender_transaction,
         "receiver_transaction": receiver_transaction,
+        "request_sender_tranx": request_sender_tranx,
+        "request_recieve_tranx": request_reciever_tranx,
         "account": account,
         "kyc": kyc
     }
