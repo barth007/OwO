@@ -13,6 +13,7 @@ django-import-export = "*"
 pillow = "*"
 whitenoise = "*"
 django-tinymce = "*"
+psycopg = "*"
 
 [dev-packages]
 

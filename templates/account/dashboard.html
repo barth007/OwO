@@ -6,6 +6,15 @@
 <section class="dashboard-section body-collapse">
     <div class="overlay pt-120">
         <div class="container-fruid">
+            
+            {% if form.errors %}
+                    
+            <div class="alert alert-danger">
+                <strong>{{form.errors}}</strong>
+            </div>
+                
+            {% endif %}
+            
             <div class="row">
                 <div class="col-xl-8 col-lg-7">
                     <div class="section-content">
@@ -391,42 +400,65 @@
                                         <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             <img src="{% static 'assets/images/icon/option.png' %}" alt="icon">
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item" href="account.html">Update</a></li>
                                             <li><a class="dropdown-item" href="javascript:void(0)">Virtual card</a></li>
-                                        </ul>
+                                        </ul> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#cardMod">
-                                            <img src="{% static 'assets/images/visa-card.png' %}" alt="image" class="w-100">
-                                        </button>
+                                
+                                {% for card in credit_card  %}
+                         
+                                <a href="{% url 'core:card_details' card.card_id %}" class="card__main">
+                                    <div class="{% if card.card_type == 'verve'%}Front_card {%elif card.card_type == 'master'%}masterCard {% else %}visaCard{% endif %}">
+                                        <div class="top_card">
+                                            <span class="visa">{{card.card_type|upper}}</span>
+                                            <div class="{% if card.card_type == 'master' %}logoMaster{% else %}logo{% endif %}">
+                                                <img src="{% if card.card_type == 'verve' %}https://upload.wikimedia.org/wikipedia/commons/2/23/Verve_Image.png{% elif card.card_type == 'visa' %}https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png{% else %} https://www.mastercard.com/content/dam/public/mastercardcom/na/us/en/homepage/Home/mc-logo-52.svg {% endif %}"  class="logo" alt="logo" />
+                                            </div>
+                                        </div>
+                                        <div class="middle_card" style="margin-top: 35px;">
+                                            <span class="chip"></span>
+                                            <div class="card_number">{{card.number}}</div>
+                                        </div>
+                                        <div class="bottom_card">
+                                            <div class="card_info">
+                                                <div class="card_holder_name" style="text-align: left;">${{card.amount}}</div>
+                                                <div class="card_holder_name">{{card.name}}</div>
+                                            </div>
+                                            <div class="cardf_info">
+                                                <div class="card_dholder_info">
+                                                    <span class="expire_month">{{card.month}}</span>
+                                                    <span class="slash">/</span>
+                                                    <span class="expire_year">{{card.year}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#cardMod">
-                                            <img src="{% static 'assets/images/OwO-card.png' %}" alt="image" class="w-100">
-                                        </button>
+                                    <div class="back_card">
+                                        <div class="top_card">
+                                            <span class="black_strip"></span>
+                                            <div class="cvc_strip">
+                                                <span class="cvc_number">000</span>
+                                            </div>
+                                        </div>
+                                        <div class="bottom_card">
+                                            <div class="flex">
+                                                <span class="sticker"></span>
+                                                <div class="logo1">
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#cardMod">
-                                            <img src="{% static 'assets/images/paypal-card.png' %}" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="single-card">
-                                        <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#cardMod">
-                                            <img src="{% static 'assets/images/blockchain-card.png' %}" alt="image" class="w-100">
-                                        </button>
-                                    </div>
-                                </div>
+                                </a>
+                                {% endfor %}
+            
+
                                 <div class="col-6">
                                     <div class="single-card">
                                         <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#addcardMod">
@@ -656,35 +688,48 @@
                                 <h6>Add Card</h6>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                             </div>
-                            <form action="#">
+                            <form method="POST">
+                                {% csrf_token %}
                                 <div class="row justify-content-center">
                                     <div class="col-md-12">
                                         <div class="single-input">
                                             <label for="cardNumber">Card Number</label>
-                                            <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843">
+                                            {{form.number}}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-input">
                                             <label for="cardHolder">Card Holder</label>
-                                            <input type="text" id="cardHolder" placeholder="Alfred Davis">
+                                            {{form.name}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-input">
-                                            <label for="month">Month</label>
-                                            <input type="text" id="month" placeholder="12">
+                                            <label for="month">Expiry Month</label>
+                                            {{form.month}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-input">
-                                            <label for="year">Year</label>
-                                            <input type="text" id="year" placeholder="2025">
+                                            <label for="year">Expiry Year</label>
+                                            {{form.year}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-input">
+                                            <label for="month">CVV</label>
+                                            {{form.cvv}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="single-input">
+                                            <label for="year">Card Type</label>
+                                            {{form.card_type}}
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="btn-border w-100">
-                                            <button class="cmn-btn w-100">Add Card</button>
+                                            <button type="submit" class="cmn-btn w-100">Add Card</button>
                                         </div>
                                     </div>
                                 </div>
