@@ -1,6 +1,7 @@
 asgiref==3.7.2
 defusedxml==0.7.1
 diff-match-patch==20230430
+dj-database-url==2.1.0
 Django==4.2.11
 django-import-export==3.3.7
 django-jazzmin==2.6.0
